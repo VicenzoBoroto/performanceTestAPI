@@ -14,7 +14,7 @@
     padding: 20px;
     text-align: center;
     }
-    .card:last-child {
+    .card-last-child {
         background-color: red;
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -22,20 +22,22 @@
         grid-row: 3;
         grid-column: 3;
         align-content: center;
+        text-align: center;
     }
     .card-title {
-    font-size: 16px;
+    font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
     }
     
     .card-value {
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
     }
     
     .central-card {
-    background-color: #2879f3;
+    background-color: #1dbdfc;
+    color: #000a9c;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -44,30 +46,130 @@
     justify-self: center;
     }
     
-    /* Estilos para os gráficos */
+    .graph-container {
+        display: flex;
+        flex: auto;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+    
     .graph {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
+        width: 100%; /* alterado para 100% */
     }
     
     .graph img {
-    max-width: 100%;
-    height: auto;
+        max-width: 100%;
+        height: auto;
     }
-    
     /* Estilo global */
-    body {
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    color: #ffffff;
-    margin: 0;
-    padding: 0;
-    }
-    
     h1 {
     text-align: center;
-    color: #000000;
+    color: #ffffff;
     margin-top: 20px;
+    }   
+    /* button */    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #27272c;
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        color: #ffffff;
+    }
+    button {
+        display: inline-flex;
+        position: relative;
+        background: #1dbdfc;
+        color: #fff;
+        text-decoration: none;
+        border: none;
+        letter-spacing: 0.1rem;
+        font-size: 1rem;
+        padding: 1rem 3rem;
+        transition: 0.2s;
+    }
+    button:hover {
+        letter-spacing: 0.1rem;
+        padding: 1rem 3rem;
+        background: var(--clr);
+        color: var(--clr);
+        animation: box 3s infinite;
+    }
+    button:before {
+        content: "";
+        position: absolute;
+        inset: 2px;
+        background: #272822;
+    }
+    button span{
+        position: relative;
+        z-index: 1;
+    }
+    button i {
+        position: absolute;
+        inset: 0;
+        display: block;
+    }
+    button i::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 2px;
+        left: 80%;
+        top: -2px;
+        border: 2px solid var(--clr);  
+    }
+    button:hover i::before {
+        width: 15px;
+        left: 20%;
+        animation: move 3s infinite;
+    }
+    button i::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 2px;
+        left: 20%;
+        bottom: -2px;
+        border: 2px solid var(--clr); 
+        background-color: #272822;
+        transition: 0.2s;
+    }
+
+    button:hover i::after {
+        width: 15px;
+        left: 80%;
+        animation: move 3s infinite;
+    }
+    @keyframes move {
+        0%{
+            transform: translateX(0);
+        }
+        50%{
+            transform: translateX(5px);
+        }
+        100%{
+            transform: translateX(0);
+        }
+    }
+    @keyframes box {
+        0%{
+            box-shadow: #27272c;
+        }
+        50%{
+            box-shadow: 0 0 25px var(--clr);
+        }
+        100%{
+            box-shadow: #27272c;
+        }
     }

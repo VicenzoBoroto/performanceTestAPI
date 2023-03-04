@@ -27,8 +27,19 @@ else:
 if not new_url.startswith('https://'):
     new_url = 'https://' + new_url
 
-# Converte a quantidade de solicitações para um número inteiro
-num_requests = int(input("Digite a quantidade de solicitações: "))
+# # Converte a quantidade de solicitações para um número inteiro
+# num_requests = int(input("Digite a quantidade de solicitações: "))
+while True:
+    num_requests = input("Digite a quantidade de solicitações: ")
+    if not num_requests.isdigit():
+        print("Por favor, digite um número inteiro válido.")
+        continue
+    num_requests = int(num_requests)
+    if num_requests <= 0:
+        print("Por favor, digite um número inteiro maior que zero.")
+        continue
+    break
+
 
 response_times = []
 cpu_percentages = []
@@ -66,14 +77,6 @@ model_dir = 'model'
 template_file = 'template.html'
 template_path = os.path.join(model_dir, template_file)
 
-# Solicita ao usuário os valores para o range do eixo x
-inicio = 0
-fim = num_requests
-passo = int(input("Digite intervalo de requisições para o eixo X: "))
-
-# Define os rótulos do eixo X
-x_ticks = range(inicio, fim, passo)
-
 # Criando dicionário com as métricas
 metrics = {
     "URL": new_url,
@@ -92,7 +95,9 @@ metrics = {
 }
 
 # Salvando as métricas em um arquivo JSON na pasta 'reports'
-metric = os.path.join(model_dir, 'metrics_' + random_string + '.json')
+reports_dir = os.path.join('reports')
+os.makedirs(reports_dir, exist_ok=True)  # cria a pasta "reports" se ela não existir
+metric = os.path.join(reports_dir, 'metrics.json')
 with open(metric, 'w') as f:
     json.dump(metrics, f)
 
@@ -102,14 +107,15 @@ y = metrics["average_times"]
 
 # Criando o gráfico de linhas
 fig, ax = plt.subplots()
+
 ax.plot(x, y)
 ax.set_xlabel('Requisições')
 ax.set_ylabel('Tempo')
 ax.set_title('Tempo x Requisição')
 
 # Salvando o gráfico em um arquivo PNG na pasta 'reports'
-filename = os.path.join(model_dir, 'graph.png')
-fig.savefig(filename)
+filename = os.path.join(reports_dir, 'graph.svg')
+fig.savefig(filename, format="svg")
 
 # Carregando o template HTML com Jinja2
 with open(template_path) as f:
@@ -117,6 +123,7 @@ with open(template_path) as f:
 template = Template(template_str)
 
 total_time = round(metrics["total_time"], 5)
+total_requests = metrics["total_requests"]
 mean_response_time = round(metrics["mean_response_time"], 5)
 peak_response_time = round(metrics["peak_response_time"], 5)
 p90_response_time = round(metrics["p90_response_time"], 5)
@@ -130,6 +137,7 @@ average_recovery_time = round(metrics["average_recovery_time"], 5)
 rendered_html = template.render(
     url=metrics["URL"],
     total_time=total_time,
+    total_requests=total_requests,
     mean_response_time=mean_response_time,
     peak_response_time=peak_response_time,
     p90_response_time=p90_response_time,
@@ -142,6 +150,6 @@ rendered_html = template.render(
 )
 
 # Salvando o HTML renderizado em um arquivo na pasta 'reports'
-report = os.path.join(model_dir, 'API_report_' + random_string + '.html')
+report = os.path.join('API_report_' + random_string + '.html')
 with open(report, 'w') as f:
     f.write(rendered_html)
