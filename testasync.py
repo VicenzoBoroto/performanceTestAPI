@@ -31,20 +31,45 @@ async def main(num_requests, urls):
     num_errors = len([x for x in error_codes if x != 200])
     return response_times, cpu_percentages, memory_percentages, error_codes, num_errors
 
+def calculate_apdex(request_times, threshold, base_threshold=5):
+    num_requests = len(request_times)
+    satisfactory_count = 0
+    tolerable_count = 0
+    for time in request_times:
+        if time <= threshold:
+            satisfactory_count += 1
+        elif time <= 4*threshold:
+            tolerable_count += 1
+    frustrated_count = num_requests - satisfactory_count - tolerable_count
+    apdex = (satisfactory_count + tolerable_count/2) / num_requests
+    if apdex >= 0.95:
+        classification = 'Excelente'
+    elif apdex >= 0.85:
+        classification = 'Boa'
+    elif apdex >= 0.70:
+        classification = 'Razoável'
+    elif apdex >= 0.50:
+        classification = 'Questionável'
+    else:
+        classification = 'Não aceitável'
+    return apdex, classification
+
+
 
 if __name__ == '__main__':
     urls = [
-        'https://httpbin.org/delay/1',
-        'https://httpbin.org/delay/2',
-        'https://httpbin.org/delay/3',
-        'https://httpbin.org/delay/4',
-        'https://httpbin.org/delay/5'
+        'https://api.cloudmersive.com'
     ]
     num_requests = 10
 
     loop = asyncio.get_event_loop()
     response_times, cpu_percentages, memory_percentages, error_codes, num_errors = loop.run_until_complete(main(num_requests, urls))
 
+    request_times = response_times
+    threshold = 2.0
+    apdex, classification = calculate_apdex(request_times, threshold)
+    print(f'URL: {urls}')
+    print(f'Apdex: {apdex:.2f} - Classificação: {classification}')
     print(f'Response times: {response_times}')
     print(f'CPU percentages: {cpu_percentages}')
     print(f'Memory percentages: {memory_percentages}')
