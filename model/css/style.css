@@ -1,3 +1,19 @@
+/* Estilo global */
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-top: 20px;
+    }
+h6 {
+    text-align: center;
+    color: #807e7e;
+    font-size: 12px;
+    }
+footer {
+    text-align: center;
+
+    } 
+
 /* Estilos para os cards */
 .grid-container {
     display: grid;
@@ -61,13 +77,7 @@
     .graph img {
         max-width: 100%;
         height: auto;
-    }
-    /* Estilo global */
-    h1 {
-    text-align: center;
-    color: #ffffff;
-    margin-top: 20px;
-    }   
+    }  
     /* button */    
     * {
         margin: 0;

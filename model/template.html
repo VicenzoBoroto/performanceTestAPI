@@ -6,10 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório de Métricas</title>
     <link rel="stylesheet" href="model/css/style.css">
+    <script>
+        var dataAtual = new Date();
+        var dataFormatada = dataAtual.getDate() + '/' + (dataAtual.getMonth()+1) + '/' + dataAtual.getFullYear();
+        var horaFormatada = dataAtual.getHours() + ':' + dataAtual.getMinutes() + ':' + dataAtual.getSeconds();
+        window.onload = function() {
+          var header = document.querySelector('header');
+          header.innerHTML = 'Verificação realizada: ' + dataFormatada + ' às ' + horaFormatada;
+        }
+      </script>
 </head>
 <body>
     <h1>API Verificada</h1>
     <h2>{{ url }}</h2>
+    <header></header>
     <div style="padding: 10px;">
         <nav>
             <ul>
@@ -25,6 +35,8 @@
             <br>
             <div class="card-title">Total Requisições:</div>
             <div class="card-value">{{ total_requests }}</div>
+            <div class="card-title">Codes:</div>
+            <div class="card-value">{{ error_info }}</div>            
         </div>
         <div class="grid-container">
             <div class="card">
@@ -62,13 +74,13 @@
             <div class="card-last-child">
                 <div class="card-title">Taxa de Erro</div>
                 <div class="card-value">{{ error_rate }}</div>
-            </div>   
+            </div>            
         </div>
     </div>
     <div id="graph-content" style="display: none;">
         <div class="graph-container">
             <div class="graph img">
-                <img src="reports/graph.svg" alt="Gráfico de Linhas">
+                <img src="reports/graphic.svg" alt="Gráfico de Linhas">
             </div>
         </div>
     </div>    
@@ -85,9 +97,10 @@
             document.getElementById("report-content").style.display = "block";
             document.getElementById("graph-content").style.display = "none";
       }
-    </script>      
-    <!-- <script>
-
-    </script> -->
+    </script> 
+    <footer>
+        <img src="model/css/logoR.png" style="margin-top: 10px;">
+        <h6>&copy; 2023 Todos os direitos reservados</h6>
+        <h6>Desenvolvido por: Diego Saltori & Vicenzo Pompermayer</h6>
+    </footer>   
   </body>
-  

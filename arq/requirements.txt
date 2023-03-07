@@ -1,0 +1,10 @@
+json
+psutil
+requests
+statistics
+numpy
+matplotlib
+halo
+selenium
+tqdm
+jinja2

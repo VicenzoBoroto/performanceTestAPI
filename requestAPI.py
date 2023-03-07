@@ -3,16 +3,15 @@ import json
 import psutil
 import requests
 import statistics
-import time, string, random
+import time
 import numpy as np
 import matplotlib.pyplot as plt
-from faker import Faker
+from halo import Halo
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 from tqdm import tqdm
 from jinja2 import Template
 from urllib.parse import urlparse
-
-fake = Faker()
-random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
 
 # Recebe a URL digitada pelo usuário
 url = input("Digite a URL da API: ")
@@ -26,9 +25,7 @@ else:
 # Verifica se a URL começa com https:// e adiciona se não começar
 if not new_url.startswith('https://'):
     new_url = 'https://' + new_url
-
-# # Converte a quantidade de solicitações para um número inteiro
-# num_requests = int(input("Digite a quantidade de solicitações: "))
+# Converte a quantidade de solicitações para um número inteiro
 while True:
     num_requests = input("Digite a quantidade de solicitações: ")
     if not num_requests.isdigit():
@@ -40,13 +37,13 @@ while True:
         continue
     break
 
-
 response_times = []
 cpu_percentages = []
 memory_percentages = []
 error_count = 0
-start_time = time.time()
+error_codes = []
 
+start_time = time.time()
 for i in tqdm(range(num_requests)):
     response = requests.get(new_url)
     response_time = response.elapsed.total_seconds()
@@ -55,7 +52,11 @@ for i in tqdm(range(num_requests)):
     memory_percentages.append(psutil.virtual_memory().percent)
     if response.status_code != 200:
         error_count += 1
-        print("Erro na solicitação {}: status code {}".format(i+1, response.status_code))
+        error_codes.append(response.status_code)
+        print(" \033[91mErro na solicitação {}: status code {}\033[0m".format(i+1, response.status_code))
+    # Verifica se o código 200 está presente na lista de erros
+    if 200 not in error_codes:
+        error_codes.append(200)
 end_time = time.time()
 
 total_time = end_time - start_time
@@ -71,7 +72,6 @@ average_recovery_time = (end_time - start_time) / num_requests
 
 # Calcula a média de tempo de cada chamada
 average_times = [statistics.mean(response_times[:i+1]) for i in range(len(response_times))]
-
 # obtendo o caminho completo para a pasta 'reports' dentro do diretório atual
 model_dir = 'model'
 template_file = 'template.html'
@@ -91,7 +91,9 @@ metrics = {
     "average_cpu_usage": average_cpu_usage,
     "average_memory_usage": average_memory_usage,
     "average_recovery_time": average_recovery_time,
-    "average_times": average_times
+    "average_times": average_times,
+    "error_count": error_count,
+    "error_codes": error_codes,
 }
 
 # Salvando as métricas em um arquivo JSON na pasta 'reports'
@@ -104,17 +106,15 @@ with open(metric, 'w') as f:
 # Preparando os dados para o gráfico de linhas
 x = np.arange(len(metrics["average_times"]))
 y = metrics["average_times"]
-
 # Criando o gráfico de linhas
 fig, ax = plt.subplots()
-
 ax.plot(x, y)
 ax.set_xlabel('Requisições')
 ax.set_ylabel('Tempo')
 ax.set_title('Tempo x Requisição')
 
 # Salvando o gráfico em um arquivo PNG na pasta 'reports'
-filename = os.path.join(reports_dir, 'graph.svg')
+filename = os.path.join(reports_dir, 'graphic.svg')
 fig.savefig(filename, format="svg")
 
 # Carregando o template HTML com Jinja2
@@ -133,6 +133,10 @@ average_latency = round(metrics["average_latency"], 5)
 average_cpu_usage = round(metrics["average_cpu_usage"], 5)
 average_memory_usage = round(metrics["average_memory_usage"], 5)
 average_recovery_time = round(metrics["average_recovery_time"], 5)
+error_count = metrics["error_count"]
+error_codes = metrics["error_codes"]
+error_codes = list(set(error_codes))
+error_info = "{}".format(", ".join(str(code) for code in error_codes))
 
 rendered_html = template.render(
     url=metrics["URL"],
@@ -147,9 +151,46 @@ rendered_html = template.render(
     average_cpu_usage=average_cpu_usage,
     average_memory_usage=average_memory_usage,
     average_recovery_time=average_recovery_time,
+    error_info=error_info,
+    error_codes=error_codes
 )
 
 # Salvando o HTML renderizado em um arquivo na pasta 'reports'
-report = os.path.join('API_report_' + random_string + '.html')
+report = os.path.join('API_report.html')
 with open(report, 'w') as f:
     f.write(rendered_html)
+
+with Halo(text='Gerando evidências...', spinner='dots'):  
+    # Configurações do navegador
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless') # Executa o navegador em modo headless (sem interface gráfica)
+    # options.add_argument('--start-maximized')
+    options.add_argument('--window-size=1280,900')
+
+    # Cria o objeto do driver do Chrome
+    driver = webdriver.Chrome(options=options)
+
+    # Carrega o arquivo HTML
+    file_path = os.path.join(os.getcwd(), 'API_report.html')
+    driver.get('file:///' + file_path)
+
+    # Espera um pouco para o HTML renderizar completamente
+    time.sleep(10)
+
+    # Tira um screenshot da primeira tela
+    element1 = driver.find_element(By.ID, 'report-btn')
+    element1.click()
+    time.sleep(10)
+    element1 = driver.find_element(By.TAG_NAME, 'body') 
+    element1.screenshot(os.path.join(reports_dir, 'reportAPI.png'))
+
+    # Tira um screenshot da segunda tela
+    element2 = driver.find_element(By.ID, 'graph-btn')
+    element2.click()
+    time.sleep(10)
+    element2 = driver.find_element(By.TAG_NAME, 'body')
+    element2.screenshot(os.path.join(reports_dir, 'graphicAPI.png'))
+
+    # Fecha o navegador
+    driver.quit()
+print("\033[94m" + 'Relatório criado com sucesso!\nObrigado por usar o RequestAPI.' + "\033[0m")
