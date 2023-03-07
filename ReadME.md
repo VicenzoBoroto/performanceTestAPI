@@ -1,6 +1,6 @@
 # Performance Teste para API com Python
 
-![logo](model/css/logoR.png)
+<div style="text-align:center"><img src="model/css/logoR.png" alt="logo" style="width:50%;"></div>
 ![reportAPI](/reports/reportAPI.png)
 ![reportAPI](/reports/graphicAPI.png)
 Pensando em realizar testes de forma direta sem precisar de algum tipo de framework pronto, ou pagar por uma ferramenta que faça essa analise.
