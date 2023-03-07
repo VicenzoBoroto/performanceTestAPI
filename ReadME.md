@@ -2,9 +2,9 @@
 
 <div style="text-align:center">
   <img src="model/css/logoR.png" alt="logo" style="width:50%;">
+  <img src="/reports/reportAPI.png" alt="logo" style="width:50%;">
+  <img src="/reports/graphicAPI.png" alt="logo" style="width:50%;">
 </div>
-![reportAPI](/reports/reportAPI.png)
-![reportAPI](/reports/graphicAPI.png)
 Pensando em realizar testes de forma direta sem precisar de algum tipo de framework pronto, ou pagar por uma ferramenta que faça essa analise.
 Criei esta aplicação que irá solicitar ao usuário no terminal o endereço do endpoint da API, após preenchido será solicitado qual número de requisições.
 
