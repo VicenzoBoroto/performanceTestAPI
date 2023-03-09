@@ -18,7 +18,7 @@
 </head>
 <body>
     <h1>API Verificada</h1>
-    <h2>https://api.cloudmersive.com</h2>
+    <h2>{{ url }}</h2>
     <header></header>
     <div style="padding: 10px;">
         <nav>
@@ -31,50 +31,50 @@
     <div id="report-content">
         <div class="central-card">
             <div class="card-title">Tempo Total</div>
-            <div class="card-value">1.61528/Segundo</div>
+            <div class="card-value">{{ total_time }}/Segundo</div>
             <br>
             <div class="card-title">Total Requisições:</div>
-            <div class="card-value">2</div>
+            <div class="card-value">{{ total_requests }}</div>
             <br>
             <div class="card-title">Codes:</div>
-            <div class="card-value">200</div>            
+            <div class="card-value">{{ error_info }}</div>            
         </div>
         <div class="grid-container">
             <div class="card">
                 <div class="card-title">Tempo Médio de Resposta:</div>
-                <div class="card-value">0.78877/Segundo</div>
+                <div class="card-value">{{ mean_response_time }}/Segundo</div>
             </div>
             <div class="card">
                 <div class="card-title">Pico de Tempo:</div>
-                <div class="card-value">0.87325/Segundo</div>
+                <div class="card-value">{{ peak_response_time }}/Segundo</div>
             </div>
             <div class="card">
                 <div class="card-title">Percentil 90:</div>
-                <div class="card-value">0.85635/Segundo</div>
+                <div class="card-value">{{ p90_response_time }}/Segundo</div>
             </div>
             <div class="card">
                 <div class="card-title">Tempo de Requisições</div>
-                <div class="card-value">1.23817/Segundo</div>
+                <div class="card-value">{{ requests_per_second }}/Segundo</div>
             </div>
             <div class="card">
                 <div class="card-title">Latência Média</div>
-                <div class="card-value">-0.01887</div>
+                <div class="card-value">{{ average_latency }}</div>
             </div>
             <div class="card">
                 <div class="card-title">Uso Médio de CPU</div>
-                <div class="card-value">14.25</div>
+                <div class="card-value">{{ average_cpu_usage }}</div>
             </div>
             <div class="card">
                 <div class="card-title">Uso Médio de Memória</div>
-                <div class="card-value">63.15</div>
+                <div class="card-value">{{ average_memory_usage }}</div>
             </div>
             <div class="card">
                 <div class="card-title">Tempo Médio de Recuperação</div>
-                <div class="card-value">0.80764/Segundo</div>
+                <div class="card-value">{{ average_recovery_time }}/Segundo</div>
             </div>
             <div class="card-last-child">
                 <div class="card-title">Taxa de Erro</div>
-                <div class="card-value">0.0</div>
+                <div class="card-value">{{ error_rate }}</div>
             </div>            
         </div>
     </div>
