@@ -1,10 +1,9 @@
-json
-psutil
-requests
-statistics
-numpy
-matplotlib
-halo
-selenium
-tqdm
-jinja2
+psutil == 5.9.4
+requests == 2.28.2
+statistics == 1.0.3.5
+numpy == 1.24.2
+matplotlib == matplotlib 3.7.1
+halo == 0.0.31
+selenium == 4.8.2
+tqdm == 4.65.0
+jinja2 == 3.1.2
