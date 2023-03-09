@@ -2,7 +2,7 @@ import asyncio
 import aiohttp
 import psutil
 import pytest
-from requestAsync import make_request, calculate_apdex, main
+from updates.requestAsync import make_request, calculate_apdex, main
 
 @pytest.mark.asyncio
 async def test_make_request():

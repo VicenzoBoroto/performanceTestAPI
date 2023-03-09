@@ -3,7 +3,7 @@ import asyncio
 from unittest.mock import patch, Mock
 from requests.exceptions import RequestException
 
-from requestFuture import make_request, main
+from updates.requestFuture import make_request, main
 
 
 def test_make_request():
