@@ -74,7 +74,7 @@ average_recovery_time = (end_time - start_time) / num_requests
 average_times = [statistics.mean(response_times[:i+1]) for i in range(len(response_times))]
 # obtendo o caminho completo para a pasta 'reports' dentro do diretório atual
 model_dir = 'model'
-template_file = 'template.html'
+template_file = 'template copy.html'
 template_path = os.path.join(model_dir, template_file)
 
 # Criando dicionário com as métricas
@@ -165,7 +165,7 @@ with Halo(text='Gerando evidências...', spinner='dots'):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless') # Executa o navegador em modo headless (sem interface gráfica)
     # options.add_argument('--start-maximized')
-    options.add_argument('--window-size=1280,900')
+    options.add_argument('--window-size=1280,1080')
 
     # Cria o objeto do driver do Chrome
     driver = webdriver.Chrome(options=options)
