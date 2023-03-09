@@ -74,7 +74,7 @@ average_recovery_time = (end_time - start_time) / num_requests
 average_times = [statistics.mean(response_times[:i+1]) for i in range(len(response_times))]
 # obtendo o caminho completo para a pasta 'reports' dentro do diretório atual
 model_dir = 'model'
-template_file = 'template copy.html'
+template_file = 'template.html'
 template_path = os.path.join(model_dir, template_file)
 
 # Criando dicionário com as métricas
