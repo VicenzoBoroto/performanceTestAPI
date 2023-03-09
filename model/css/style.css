@@ -24,15 +24,15 @@ footer {
     }
     
     .card {
-    background-color: #000a9c;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #1e1e20;
+    border-radius: 15px;
+    border: solid 0.8px #1dbdfc;
     padding: 20px;
     text-align: center;
     }
     .card-last-child {
-        background-color: red;
-        border-radius: 5px;
+        background-color: rgb(143, 18, 18);
+        border-radius: 15px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 20px;
         grid-row: 3;
@@ -52,10 +52,10 @@ footer {
     }
     
     .central-card {
-    background-color: #1dbdfc;
-    color: #000a9c;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #121213;
+    color: #ffffff;
+    border-radius: 20px;
+    border: solid 0.8px #1dbdfc;
     padding: 20px;
     text-align: center;
     grid-row: 2 / span 2;
@@ -91,7 +91,7 @@ footer {
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        background-color: #27272c;
+        background-color: #151516;
         font-family: Arial, sans-serif;
         font-size: 20px;
         color: #ffffff;
@@ -177,7 +177,7 @@ footer {
             box-shadow: #27272c;
         }
         50%{
-            box-shadow: 0 0 25px var(--clr);
+            box-shadow: 0 0 10px var(--clr);
         }
         100%{
             box-shadow: #27272c;
