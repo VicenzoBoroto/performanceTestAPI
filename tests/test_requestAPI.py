@@ -8,7 +8,7 @@ from requestAPI import main
 
 @pytest.fixture
 def url():
-    return "http://api.cloudmersive.com"
+    return "api.cloudmersive.com"
 
 @pytest.fixture
 def https_url():
