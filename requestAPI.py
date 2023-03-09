@@ -165,7 +165,7 @@ with Halo(text='Gerando evidências...', spinner='dots'):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless') # Executa o navegador em modo headless (sem interface gráfica)
     # options.add_argument('--start-maximized')
-    options.add_argument('--window-size=1280,900')
+    options.add_argument('--window-size=1280,1080')
 
     # Cria o objeto do driver do Chrome
     driver = webdriver.Chrome(options=options)
