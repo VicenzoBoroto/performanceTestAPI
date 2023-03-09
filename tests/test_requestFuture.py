@@ -23,7 +23,7 @@ def test_make_request():
 
 
 def test_make_request_error():
-    url = 'https://api.cloudmersive.com'
+    url = 'https://httpstat.us/404'
     session_mock = Mock()
     session_mock.get.side_effect = RequestException
     response_time_list = []
