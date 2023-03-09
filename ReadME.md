@@ -13,12 +13,6 @@ Exemplo: Caso o usuário opte por enviar 1000 requisições, o mesmo pode escolh
 
 Será gerado um arquivo JSON para que caso o usuário sinta necessário manipular os dados em outro programa como Microsoft Power BI ou até mesmo Microsoft Excel.
 
-
-#crypto (Ethereum Mainnet, Binance Smart Chain, Polygon)
-Wallet: 0x8f424A6360BAf9d4111994ad2fDb0adC25004Eb3
-#pix
-Chave: dgarcia.saltori@gmail.com 
-
 Meu YouTube: https://youtube.com/@diego.saltori
 Meu Instagram: http://instagram.com/diego.saltori
 Meu LinkedIn: https://www.linkedin.com/in/dgarciasaltori/
