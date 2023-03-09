@@ -1,5 +1,0 @@
-Teste API:
-
-httpstat.us
-
-api.cloudmersive.com
