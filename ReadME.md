@@ -13,10 +13,6 @@ Exemplo: Caso o usuário opte por enviar 1000 requisições, o mesmo pode escolh
 
 Será gerado um arquivo JSON para que caso o usuário sinta necessário manipular os dados em outro programa como Microsoft Power BI ou até mesmo Microsoft Excel.
 
-Meu YouTube: https://youtube.com/@diego.saltori
-Meu Instagram: http://instagram.com/diego.saltori
-Meu LinkedIn: https://www.linkedin.com/in/dgarciasaltori/
-
 # Performance Test for API with Python
 
 Thinking about performing tests directly without needing some kind of ready-made framework, or paying for a tool that does this analysis.
@@ -26,24 +22,6 @@ The application will start sending the requests to the endpoint and when finishe
 Example: If the user chooses to send 1000 requests, he can choose a value of 100 requests to better visualize the graph on the "x" axis, the graph will be mounted containing all the information from the first to the last request, this will only be a way to better organize and visualize it.
 
 A JSON file will be generated in case the user feels it necessary to manipulate the data in another program such as Microsoft Power BI or even Microsoft Excel.
-
-## Quer ajudar o canal? Basta fazer uma doação ❤️
-## Want to help the channel? Just make a donation ❤️
-# Cryptocurrency 
-### Ethereum Mainnet - ETH, USDT >>> Outra criptomoeda para rede / Another cryptocurrency for networking <<<
-### Binance Smart Chain - BNB, BUSD >>> Outra criptomoeda para rede / Another cryptocurrency for networking <<<
-### Polygon MATIC, wETH, USDC >>> Outra criptomoeda para rede / Another cryptocurrency for networking <<<
-
-## Wallet: 0x8f424A6360BAf9d4111994ad2fDb0adC25004Eb3
-
-# Binance Pay
-## Pay ID: 240356717
-
-# PayPal
-## dgarcia.saltori@me.com
-
-# PIX >>> Apenas para o Brasil - Only for Brazil <<<
-## Chave PIX: dgarcia.saltori@gmail.com 
 
 Meu YouTube: https://youtube.com/@diego.saltori
 Meu Instagram: http://instagram.com/diego.saltori
