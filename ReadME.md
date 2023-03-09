@@ -1,10 +1,17 @@
 # Performance Teste para API com Python
 
-<div style="align-items:center">
+<div>
   <img src="model/css/logoRT.png" alt="logo">
   <img src="/reports/reportAPI.png" alt="Report">
   <img src="/reports/graphicAPI.png" alt="Report">
 </div>
+<style>
+  div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  };
+</style>
 Pensando em realizar testes de forma direta sem precisar de algum tipo de framework pronto, ou pagar por uma ferramenta que faça essa analise.
 Criei esta aplicação que irá solicitar ao usuário no terminal o endereço do endpoint da API, após preenchido será solicitado qual número de requisições.
 
