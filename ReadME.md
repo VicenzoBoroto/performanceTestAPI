@@ -1,7 +1,7 @@
 # Performance Teste para API com Python
 
 <div style="text-align:center">
-  <img src="model/css/logoR.png" alt="logo">
+  <img src="model/css/logoRT.png" alt="logo">
   <img src="/reports/reportAPI.png" alt="Report">
   <img src="/reports/graphicAPI.png" alt="Report">
 </div>
