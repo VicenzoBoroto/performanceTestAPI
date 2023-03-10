@@ -8,6 +8,7 @@ class TesteBanco:
         driver= '{ODBC Driver 17 for SQL Server}'
         self.conn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
         self.cur = self.conn.cursor()
+        print("Conectado ao servidor '%s', banco de dados '%s'" % (server, database))
     #Função para executar a consulta no banco de dados
     def executar_consultas(self, num_consultas):
         tempos = []
@@ -37,7 +38,8 @@ class TesteBanco:
             return "Péssimo"
 #Gerango resultados
 if __name__ == '__main__':
-    teste = TesteBanco("nome_servidor.database.windows.net", "nome_banco", "nome_usuario", "senha") #Altere as informações para o banco desejado
+    #Altere as informações para o banco desejado "nome_servidor.database.windows.net", "nome_banco", "nome_usuario", "senha"
+    teste = TesteBanco("nome_servidor.database.windows.net", "nome_banco", "nome_usuario", "senha") 
     tempos = teste.executar_consultas(100) #altere o valor para a quantidade de consultas desejadas
     media, mediana, variancia, desvio_padrao = teste.calcular_metricas(tempos)
     avaliacao = teste.avaliar_desempenho(media)

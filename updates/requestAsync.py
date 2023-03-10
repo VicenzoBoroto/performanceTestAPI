@@ -28,9 +28,8 @@ async def main(num_requests, urls):
 
         await asyncio.gather(*tasks)
 
-        num_errors = len([x for x in error_codes if x != 200])
-        return response_times, cpu_percentages, memory_percentages, error_codes, num_errors
-
+    num_errors = len([x for x in error_codes if x != 200])
+    return response_times, cpu_percentages, memory_percentages, error_codes, num_errors
 
 def calculate_apdex(request_times, threshold, base_threshold=5):
     num_requests = len(request_times)
@@ -56,15 +55,18 @@ def calculate_apdex(request_times, threshold, base_threshold=5):
     return apdex, classification
 
 
+
 if __name__ == '__main__':
-    urls = input("Digite a URL da API: ")
-    num_requests = int(input("Digite a quantidade de Requisições: "))
-    threshold = float(input("Digite o tempo em segundos do Threshold [Por padrão digite 2]: ") or "2")
+    urls = [
+        'https://api.cloudmersive.com'
+    ]
+    num_requests = 10
+
     loop = asyncio.get_event_loop()
-    response_times, cpu_percentages, memory_percentages, error_codes, num_errors = loop.run_until_complete(main(num_requests, urls.split()))
+    response_times, cpu_percentages, memory_percentages, error_codes, num_errors = loop.run_until_complete(main(num_requests, urls))
 
     request_times = response_times
-
+    threshold = 2.0
     apdex, classification = calculate_apdex(request_times, threshold)
     print(f'URL: {urls}')
     print(f'Apdex: {apdex:.2f} - Classificação: {classification}')
@@ -73,7 +75,3 @@ if __name__ == '__main__':
     print(f'Memory percentages: {memory_percentages}')
     print(f'Error codes: {error_codes}')
     print(f'Number of errors: {num_errors}')
-    
-    # esperando todas as tarefas do asyncio serem concluídas antes de fechar o loop de eventos
-    loop.run_until_complete(asyncio.sleep(0))
-    loop.close()
