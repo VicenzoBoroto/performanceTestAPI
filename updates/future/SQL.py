@@ -5,6 +5,7 @@ import pyodbc
 class TesteBanco:
     #Driver para acessar a Azure
     def __init__(self, server, database, username, password):
+        #Instale o Driver ODBC antes de rodar a apalicação
         driver= '{ODBC Driver 17 for SQL Server}'
         self.conn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
         self.cur = self.conn.cursor()
@@ -13,12 +14,15 @@ class TesteBanco:
     def executar_consultas(self, num_consultas):
         tempos = []
         for i in range(num_consultas):
-            consulta = "SELECT * FROM tabela WHERE id = %s" % random.randint(1, 10000)#pode alterar o numero de consultas do randon.
+            id_proposta = random.randint(1, 10000)
+            # altere para tabela desejada e para qual coluna deseja apontar a varredura.
+            consulta = "SELECT * FROM tabela WHERE ID = ?"
             inicio = time.time()
-            self.cur.execute(consulta)
+            self.cur.execute(consulta, (id_proposta,))
             fim = time.time()
             tempos.append(fim - inicio)
         return tempos
+
     #Função para Calculo de Métricas
     def calcular_metricas(self, tempos):
         media = sum(tempos) / len(tempos)
