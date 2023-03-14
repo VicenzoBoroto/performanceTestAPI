@@ -3,9 +3,7 @@ print("Seja bem-vindo(a) ao Request APP")
 
 while True:
     print("Selecione o arquivo Python que deseja executar:")
-    print("1. requestAPI.py")
-    print("2. requestSQL.py")
-    print("Digite 'sair' para encerrar o programa.")
+    print("1. requestAPI, 2. requestSQL ou Digite 'sair' para encerrar o programa.")
 
     choice = input("Digite 1, 2 ou sair: ")
 
