@@ -1,6 +1,7 @@
 # Performance Teste para API e Banco de Dados SQL com Python
 
 <div style="align-items:center">
+  <img src="model/css/logoA.png" alt="logo">
   <img src="model/css/logoAPI.png" alt="logo">
   <img src="/reports/reportAPI.png" alt="Report">
   <img src="/reports/graphicAPI.png" alt="Report">
