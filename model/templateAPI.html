@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Métricas</title>
-    <link rel="stylesheet" href="model/css/style copy.css">
+    <title>RequestAPI</title>
+    <link rel="stylesheet" href="model/css/style.css">
     <script>
         var dataAtual = new Date();
         var dataFormatada = dataAtual.getDate() + '/' + (dataAtual.getMonth()+1) + '/' + dataAtual.getFullYear();
@@ -30,14 +30,11 @@
     </div>
     <div id="report-content">
         <div class="central-card">
-            <div class="card-title">Tempo Total</div>
-            <div class="card-value">{{ total_time }}/Segundo</div>
-            <br>
-            <div class="card-title">Total Requisições:</div>
-            <div class="card-value">{{ total_requests }}</div>
-            <br>
-            <div class="card-title">Codes:</div>
-            <div class="card-value">{{ error_info }}</div>            
+            <div class="card-title">Tempo Total: {{ total_time }} Segundos</div>
+            <div class="card-title">Total Requisições: {{ total_requests }}</div>
+            <div class="card-title">Codes: {{ error_info }}</div>
+            <div class="card-title">Apdex: {{ apdex }}</div>
+            <div class="card-title">Classificação: {{ classification }}</div>
         </div>
         <div class="grid-container">
             <div class="card">
@@ -46,11 +43,11 @@
             </div>
             <div class="card">
                 <div class="card-title">Pico de Tempo:</div>
-                <div class="card-value">{{ peak_response_time }}/Segundo</div>
+                <div class="card-value">{{ peak_response_time }} Segundos</div>
             </div>
             <div class="card">
                 <div class="card-title">Percentil 90:</div>
-                <div class="card-value">{{ p90_response_time }}/Segundo</div>
+                <div class="card-value">{{ p90_response_time }} Segundos</div>
             </div>
             <div class="card">
                 <div class="card-title">Tempo de Requisições</div>
@@ -70,7 +67,7 @@
             </div>
             <div class="card">
                 <div class="card-title">Tempo Médio de Recuperação</div>
-                <div class="card-value">{{ average_recovery_time }}/Segundo</div>
+                <div class="card-value">{{ average_recovery_time }} Segundos</div>
             </div>
             <div class="card-last-child">
                 <div class="card-title">Taxa de Erro</div>

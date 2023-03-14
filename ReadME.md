@@ -1,56 +1,47 @@
-# Performance Teste para API com Python
+# Performance Teste para API e Banco de Dados SQL com Python
 
 <div>
   <img src="model/css/logoRT.png" alt="logo">
+<div style="align-items:center">
+  <img src="model/css/logoSQL.png" alt="logo">
+  <img src="model/css/logoA.png" alt="logo">
+  <img src="model/css/logoAPI.png" alt="logo">
   <img src="/reports/reportAPI.png" alt="Report">
   <img src="/reports/graphicAPI.png" alt="Report">
+  <img src="/reports/reportSQL.png" alt="Report">
 </div>
-<style>
-  div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  };
-</style>
 Pensando em realizar testes de forma direta sem precisar de algum tipo de framework pronto, ou pagar por uma ferramenta que faça essa analise.
 Criei esta aplicação que irá solicitar ao usuário no terminal o endereço do endpoint da API, após preenchido será solicitado qual número de requisições.
 
-A aplicação irá começar a enviar as requisições para o endpoint e ao finalizar será solicitado que o usuário escolha o intervalo de requisições que será mostrado o gráfico no reporte criado.
-Exemplo: Caso o usuário opte por enviar 1000 requisições, o mesmo pode escolher um valor de 100 requisições para melhor visualizar o gráfico no eixo "x", será montado o gráfico contendo todas as informações da primeira a última requisição, isso apenas será uma forma de organizar e visualizar melhor o mesmo.
+Seja bem-vindo(a) ao RequestAPI/RequestSQL.
 
-Será gerado um arquivo JSON para que caso o usuário sinta necessário manipular os dados em outro programa como Microsoft Power BI ou até mesmo Microsoft Excel.
+Aplicações criadas por Diego Saltori com a colaboração de Vicenzo Pompermayer.
 
-Meu YouTube: https://youtube.com/@diego.saltori
-Meu Instagram: http://instagram.com/diego.saltori
-Meu LinkedIn: https://www.linkedin.com/in/dgarciasaltori/
+RequestAPI é uma ferramenta de teste de performance para analisar API's e endpoint, direcionando consultas (GET), para obter o tempo de resposta e assim analisar sua performance.
 
-# Performance Test for API with Python
+RequestSQL é uma ferramenta poderosa para teste de performance em banco de dados SQL e possibilita ser feita consulta a tabelas de forma aleatória ou direcionada ao banco, tendo como resultado uma profunda analise pelo tempo obtido.
 
-Thinking about performing tests directly without needing some kind of ready-made framework, or paying for a tool that does this analysis.
-I created this application that will ask the user in the terminal for the address of the API endpoint, after filling it in, the number of requests will be asked.
+Ambas ao serem executadas geram:
 
-The application will start sending the requests to the endpoint and when finished, the user will be asked to choose the range of requests that will be shown in the graph in the created report.
-Example: If the user chooses to send 1000 requests, he can choose a value of 100 requests to better visualize the graph on the "x" axis, the graph will be mounted containing all the information from the first to the last request, this will only be a way to better organize and visualize it.
+Reporte em HTML (sendo que a API gera um gráfico integrado para melhor analise)
+Imagem PNG do reporte HTML
+JSON com todos os dados, inclusive dados oriundo das métricas de calculo (Arquivo JSON para que caso o usuário sinta necessário manipular os dados em outro programa como Microsoft Power BI ou até mesmo Microsoft Excel).
 
-A JSON file will be generated in case the user feels it necessary to manipulate the data in another program such as Microsoft Power BI or even Microsoft Excel.
+# Performance Test for API and SQL Database with Python
 
-## Quer ajudar o canal? Basta fazer uma doação ❤️
-## Want to help the channel? Just make a donation ❤️
-# Cryptocurrency 
-### Ethereum Mainnet - ETH, USDT >>> Outra criptomoeda para rede / Another cryptocurrency for networking <<<
-### Binance Smart Chain - BNB, BUSD >>> Outra criptomoeda para rede / Another cryptocurrency for networking <<<
-### Polygon MATIC, wETH, USDC >>> Outra criptomoeda para rede / Another cryptocurrency for networking <<<
+Welcome to RequestAPI/RequestSQL.
 
-## Wallet: 0x8f424A6360BAf9d4111994ad2fDb0adC25004Eb3
+Applications created by Diego Saltori with the collaboration of Vicenzo Pompermayer.
 
-# Binance Pay
-## Pay ID: 240356717
+RequestAPI is a performance testing tool to analyze API's and endpoint, directing queries (GET), to get the response time and thus analyze its performance.
 
-# PayPal
-## dgarcia.saltori@me.com
+RequestSQL is a powerful tool for testing performance in SQL databases and allows queries to tables randomly or directly to the database, resulting in a deep analysis for the time obtained.
 
-# PIX >>> Apenas para o Brasil - Only for Brazil <<<
-## Chave PIX: dgarcia.saltori@gmail.com 
+Both when executed generated:
+
+Report in HTML (with the API generating an integrated graph for better analysis)
+HTML report PNG image
+JSON with all the data, including data originating from the calculation metrics (JSON file in case the user feels it necessary to manipulate the data in another program such as Microsoft Power BI or even Microsoft Excel).
 
 Meu YouTube: https://youtube.com/@diego.saltori
 Meu Instagram: http://instagram.com/diego.saltori

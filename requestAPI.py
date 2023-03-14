@@ -1,9 +1,4 @@
-import os
-import json
-import psutil
-import requests
-import statistics
-import time
+import os, json, psutil, requests, statistics, time, sys
 import numpy as np
 import matplotlib.pyplot as plt
 from halo import Halo
@@ -14,18 +9,21 @@ from jinja2 import Template
 from urllib.parse import urlparse
 
 # Recebe a URL digitada pelo usuário
-url = input("Digite a URL da API: ")
-# Analisa a URL
-parsed_url = urlparse(url)
-# Verifica se o esquema é http e substitui por https
-if parsed_url.scheme == 'http':
-    new_url = 'https://' + parsed_url.netloc + parsed_url.path
+url = input("Digite a URL da API ('sair' para encerrar): ")
+if url == "sair":
+    sys.exit()
 else:
-    new_url = url
-# Verifica se a URL começa com https:// e adiciona se não começar
-if not new_url.startswith('https://'):
-    new_url = 'https://' + new_url
-# Converte a quantidade de solicitações para um número inteiro
+    # Analisa a URL
+    parsed_url = urlparse(url)
+    # Verifica se o esquema é http e substitui por https
+    if parsed_url.scheme == 'http':
+        new_url = 'https://' + parsed_url.netloc + parsed_url.path
+    else:
+        new_url = url
+    # Verifica se a URL começa com https:// e adiciona se não começar
+    if not new_url.startswith('https://'):
+        new_url = 'https://' + new_url
+    # Converte a quantidade de solicitações para um número inteiro
 while True:
     num_requests = input("Digite a quantidade de solicitações: ")
     if not num_requests.isdigit():
@@ -42,7 +40,6 @@ cpu_percentages = []
 memory_percentages = []
 error_count = 0
 error_codes = []
-
 start_time = time.time()
 for i in tqdm(range(num_requests)):
     response = requests.get(new_url)
@@ -59,6 +56,29 @@ for i in tqdm(range(num_requests)):
         error_codes.append(200)
 end_time = time.time()
 
+def calculate_apdex(request_times, threshold, base_threshold=5):
+    num_requests = len(request_times)
+    satisfactory_count = 0
+    tolerable_count = 0
+    for time in request_times:
+        if time <= threshold:
+            satisfactory_count += 1
+        elif time <= 4*threshold:
+            tolerable_count += 1
+    frustrated_count = num_requests - satisfactory_count - tolerable_count
+    apdex = (satisfactory_count + tolerable_count/2) / num_requests
+    if apdex >= 0.95:
+        classification = 'Excelente'
+    elif apdex >= 0.85:
+        classification = 'Boa'
+    elif apdex >= 0.70:
+        classification = 'Razoável'
+    elif apdex >= 0.50:
+        classification = 'Questionável'
+    else:
+        classification = 'Não aceitável'
+    return apdex, classification
+
 total_time = end_time - start_time
 mean_response_time = np.mean(response_times)
 peak_response_time = max(response_times)
@@ -69,17 +89,22 @@ average_latency = mean_response_time - (total_time / num_requests)
 average_cpu_usage = np.mean(cpu_percentages)
 average_memory_usage = np.mean(memory_percentages)
 average_recovery_time = (end_time - start_time) / num_requests
-
+request_times = response_times
+threshold = 2.0
+apdex, classification = calculate_apdex(request_times, threshold)
 # Calcula a média de tempo de cada chamada
 average_times = [statistics.mean(response_times[:i+1]) for i in range(len(response_times))]
+
 # obtendo o caminho completo para a pasta 'reports' dentro do diretório atual
 model_dir = 'model'
-template_file = 'template.html'
+template_file = 'templateAPI.html'
 template_path = os.path.join(model_dir, template_file)
 
 # Criando dicionário com as métricas
 metrics = {
     "URL": new_url,
+    "APDEX": apdex,
+    "Classification": classification,
     "total_requests": num_requests,
     "total_time": total_time,
     "mean_response_time": mean_response_time,
@@ -95,11 +120,10 @@ metrics = {
     "error_count": error_count,
     "error_codes": error_codes,
 }
-
 # Salvando as métricas em um arquivo JSON na pasta 'reports'
 reports_dir = os.path.join('reports')
 os.makedirs(reports_dir, exist_ok=True)  # cria a pasta "reports" se ela não existir
-metric = os.path.join(reports_dir, 'metrics.json')
+metric = os.path.join(reports_dir, 'metricsAPI.json')
 with open(metric, 'w') as f:
     json.dump(metrics, f)
 
@@ -124,6 +148,8 @@ template = Template(template_str)
 
 total_time = round(metrics["total_time"], 5)
 total_requests = metrics["total_requests"]
+classification = metrics["Classification"]
+apdex = metrics["APDEX"]
 mean_response_time = round(metrics["mean_response_time"], 5)
 peak_response_time = round(metrics["peak_response_time"], 5)
 p90_response_time = round(metrics["p90_response_time"], 5)
@@ -140,6 +166,8 @@ error_info = "{}".format(", ".join(str(code) for code in error_codes))
 
 rendered_html = template.render(
     url=metrics["URL"],
+    apdex=apdex,
+    classification=classification,
     total_time=total_time,
     total_requests=total_requests,
     mean_response_time=mean_response_time,
@@ -164,33 +192,26 @@ with Halo(text='Gerando evidências...', spinner='dots'):
     # Configurações do navegador
     options = webdriver.ChromeOptions()
     options.add_argument('--headless') # Executa o navegador em modo headless (sem interface gráfica)
-    # options.add_argument('--start-maximized')
     options.add_argument('--window-size=1280,1080')
-
     # Cria o objeto do driver do Chrome
     driver = webdriver.Chrome(options=options)
-
     # Carrega o arquivo HTML
     file_path = os.path.join(os.getcwd(), 'API_report.html')
     driver.get('file:///' + file_path)
-
     # Espera um pouco para o HTML renderizar completamente
     time.sleep(10)
-
     # Tira um screenshot da primeira tela
     element1 = driver.find_element(By.ID, 'report-btn')
     element1.click()
     time.sleep(10)
     element1 = driver.find_element(By.TAG_NAME, 'body') 
     element1.screenshot(os.path.join(reports_dir, 'reportAPI.png'))
-
     # Tira um screenshot da segunda tela
     element2 = driver.find_element(By.ID, 'graph-btn')
     element2.click()
     time.sleep(10)
     element2 = driver.find_element(By.TAG_NAME, 'body')
     element2.screenshot(os.path.join(reports_dir, 'graphicAPI.png'))
-
     # Fecha o navegador
     driver.quit()
 print("\033[94m" + 'Relatório criado com sucesso!\nObrigado por usar o RequestAPI.' + "\033[0m")
