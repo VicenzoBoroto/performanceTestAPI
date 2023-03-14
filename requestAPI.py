@@ -1,9 +1,4 @@
-import os
-import json
-import psutil
-import requests
-import statistics
-import time
+import os, json, psutil, requests, statistics, time
 import numpy as np
 import matplotlib.pyplot as plt
 from halo import Halo
@@ -42,7 +37,6 @@ cpu_percentages = []
 memory_percentages = []
 error_count = 0
 error_codes = []
-
 start_time = time.time()
 for i in tqdm(range(num_requests)):
     response = requests.get(new_url)
@@ -92,14 +86,12 @@ average_latency = mean_response_time - (total_time / num_requests)
 average_cpu_usage = np.mean(cpu_percentages)
 average_memory_usage = np.mean(memory_percentages)
 average_recovery_time = (end_time - start_time) / num_requests
-
-
 request_times = response_times
 threshold = 2.0
 apdex, classification = calculate_apdex(request_times, threshold)
-
 # Calcula a média de tempo de cada chamada
 average_times = [statistics.mean(response_times[:i+1]) for i in range(len(response_times))]
+
 # obtendo o caminho completo para a pasta 'reports' dentro do diretório atual
 model_dir = 'model'
 template_file = 'templateAPI.html'
@@ -125,7 +117,6 @@ metrics = {
     "error_count": error_count,
     "error_codes": error_codes,
 }
-
 # Salvando as métricas em um arquivo JSON na pasta 'reports'
 reports_dir = os.path.join('reports')
 os.makedirs(reports_dir, exist_ok=True)  # cria a pasta "reports" se ela não existir
@@ -198,33 +189,26 @@ with Halo(text='Gerando evidências...', spinner='dots'):
     # Configurações do navegador
     options = webdriver.ChromeOptions()
     options.add_argument('--headless') # Executa o navegador em modo headless (sem interface gráfica)
-    # options.add_argument('--start-maximized')
     options.add_argument('--window-size=1280,1080')
-
     # Cria o objeto do driver do Chrome
     driver = webdriver.Chrome(options=options)
-
     # Carrega o arquivo HTML
     file_path = os.path.join(os.getcwd(), 'API_report.html')
     driver.get('file:///' + file_path)
-
     # Espera um pouco para o HTML renderizar completamente
     time.sleep(10)
-
     # Tira um screenshot da primeira tela
     element1 = driver.find_element(By.ID, 'report-btn')
     element1.click()
     time.sleep(10)
     element1 = driver.find_element(By.TAG_NAME, 'body') 
     element1.screenshot(os.path.join(reports_dir, 'reportAPI.png'))
-
     # Tira um screenshot da segunda tela
     element2 = driver.find_element(By.ID, 'graph-btn')
     element2.click()
     time.sleep(10)
     element2 = driver.find_element(By.TAG_NAME, 'body')
     element2.screenshot(os.path.join(reports_dir, 'graphicAPI.png'))
-
     # Fecha o navegador
     driver.quit()
 print("\033[94m" + 'Relatório criado com sucesso!\nObrigado por usar o RequestAPI.' + "\033[0m")
