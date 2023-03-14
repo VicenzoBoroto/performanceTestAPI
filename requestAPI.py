@@ -59,6 +59,29 @@ for i in tqdm(range(num_requests)):
         error_codes.append(200)
 end_time = time.time()
 
+def calculate_apdex(request_times, threshold, base_threshold=5):
+    num_requests = len(request_times)
+    satisfactory_count = 0
+    tolerable_count = 0
+    for time in request_times:
+        if time <= threshold:
+            satisfactory_count += 1
+        elif time <= 4*threshold:
+            tolerable_count += 1
+    frustrated_count = num_requests - satisfactory_count - tolerable_count
+    apdex = (satisfactory_count + tolerable_count/2) / num_requests
+    if apdex >= 0.95:
+        classification = 'Excelente'
+    elif apdex >= 0.85:
+        classification = 'Boa'
+    elif apdex >= 0.70:
+        classification = 'Razoável'
+    elif apdex >= 0.50:
+        classification = 'Questionável'
+    else:
+        classification = 'Não aceitável'
+    return apdex, classification
+
 total_time = end_time - start_time
 mean_response_time = np.mean(response_times)
 peak_response_time = max(response_times)
@@ -70,16 +93,23 @@ average_cpu_usage = np.mean(cpu_percentages)
 average_memory_usage = np.mean(memory_percentages)
 average_recovery_time = (end_time - start_time) / num_requests
 
+
+request_times = response_times
+threshold = 2.0
+apdex, classification = calculate_apdex(request_times, threshold)
+
 # Calcula a média de tempo de cada chamada
 average_times = [statistics.mean(response_times[:i+1]) for i in range(len(response_times))]
 # obtendo o caminho completo para a pasta 'reports' dentro do diretório atual
 model_dir = 'model'
-template_file = 'template.html'
+template_file = 'templateAPI.html'
 template_path = os.path.join(model_dir, template_file)
 
 # Criando dicionário com as métricas
 metrics = {
     "URL": new_url,
+    "APDEX": apdex,
+    "Classification": classification,
     "total_requests": num_requests,
     "total_time": total_time,
     "mean_response_time": mean_response_time,
@@ -99,7 +129,7 @@ metrics = {
 # Salvando as métricas em um arquivo JSON na pasta 'reports'
 reports_dir = os.path.join('reports')
 os.makedirs(reports_dir, exist_ok=True)  # cria a pasta "reports" se ela não existir
-metric = os.path.join(reports_dir, 'metrics.json')
+metric = os.path.join(reports_dir, 'metricsAPI.json')
 with open(metric, 'w') as f:
     json.dump(metrics, f)
 
@@ -124,6 +154,8 @@ template = Template(template_str)
 
 total_time = round(metrics["total_time"], 5)
 total_requests = metrics["total_requests"]
+classification = metrics["Classification"]
+apdex = metrics["APDEX"]
 mean_response_time = round(metrics["mean_response_time"], 5)
 peak_response_time = round(metrics["peak_response_time"], 5)
 p90_response_time = round(metrics["p90_response_time"], 5)
@@ -140,6 +172,8 @@ error_info = "{}".format(", ".join(str(code) for code in error_codes))
 
 rendered_html = template.render(
     url=metrics["URL"],
+    apdex=apdex,
+    classification=classification,
     total_time=total_time,
     total_requests=total_requests,
     mean_response_time=mean_response_time,
