@@ -1,4 +1,4 @@
-import os, json, psutil, requests, statistics, time
+import os, json, psutil, requests, statistics, time, sys
 import numpy as np
 import matplotlib.pyplot as plt
 from halo import Halo
@@ -9,18 +9,21 @@ from jinja2 import Template
 from urllib.parse import urlparse
 
 # Recebe a URL digitada pelo usuário
-url = input("Digite a URL da API: ")
-# Analisa a URL
-parsed_url = urlparse(url)
-# Verifica se o esquema é http e substitui por https
-if parsed_url.scheme == 'http':
-    new_url = 'https://' + parsed_url.netloc + parsed_url.path
+url = input("Digite a URL da API ('sair' para encerrar): ")
+if url == "sair":
+    sys.exit()
 else:
-    new_url = url
-# Verifica se a URL começa com https:// e adiciona se não começar
-if not new_url.startswith('https://'):
-    new_url = 'https://' + new_url
-# Converte a quantidade de solicitações para um número inteiro
+    # Analisa a URL
+    parsed_url = urlparse(url)
+    # Verifica se o esquema é http e substitui por https
+    if parsed_url.scheme == 'http':
+        new_url = 'https://' + parsed_url.netloc + parsed_url.path
+    else:
+        new_url = url
+    # Verifica se a URL começa com https:// e adiciona se não começar
+    if not new_url.startswith('https://'):
+        new_url = 'https://' + new_url
+    # Converte a quantidade de solicitações para um número inteiro
 while True:
     num_requests = input("Digite a quantidade de solicitações: ")
     if not num_requests.isdigit():

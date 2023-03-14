@@ -1,11 +1,4 @@
-import os
-import json
-import pyodbc
-import time
-import os
-import json
-import time
-import getpass
+import os, sys, json, pyodbc, time, getpass
 from halo import Halo
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -51,10 +44,13 @@ class TesteSQL:
             return "Péssimo"
 if __name__ == "__main__":
     #Altere as informações para o banco desejado "nome_servidor.database.windows.net", "nome_banco", "nome_usuario", "senha"
-    server = input("Insira o nome do servidor: ")
-    database = input("Insira o nome do banco de dados: ")
-    username = input("Insira o nome de usuário: ")
-    password = getpass.getpass("Insira a senha: ")
+    server = input("Insira o nome do servidor ('sair' para encerrar): ")
+    if server == "sair":
+        sys.exit()
+    else:
+        database = input("Insira o nome do banco de dados: ")
+        username = input("Insira o nome de usuário: ")
+        password = getpass.getpass("Insira a senha: ")
     while True:
         consult = input("Insira o número de consultas: ")
         try:
